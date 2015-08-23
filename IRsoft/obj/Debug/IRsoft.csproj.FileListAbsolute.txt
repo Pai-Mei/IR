@@ -1,0 +1,23 @@
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\bin\Debug\IRsoft.exe.config
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\bin\Debug\IRsoft.exe
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\bin\Debug\IRsoft.pdb
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.csprojResolveAssemblyReference.cache
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.Form1.resources
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.Properties.Resources.resources
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.csproj.GenerateResource.Cache
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.exe
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.pdb
+c:\users\stanislav\documents\visual studio 2013\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.TProfile.resources
+E:\Projects\IRsoft\IRsoft\bin\Debug\IRsoft.exe.config
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.exe
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.pdb
+E:\Projects\IRsoft\IRsoft\bin\Debug\IRsoft.exe
+E:\Projects\IRsoft\IRsoft\bin\Debug\IRsoft.pdb
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.csprojResolveAssemblyReference.cache
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.Form1.resources
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.Properties.Resources.resources
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.TProfile.resources
+E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.csproj.GenerateResource.Cache
+C:\Users\Stanislav\Documents\GitHub\IRsoft\IRsoft\bin\Debug\IRsoft.exe.config
+C:\Users\Stanislav\Documents\GitHub\IRsoft\IRsoft\obj\Debug\IRsoft.exe
+C:\Users\Stanislav\Documents\GitHub\IRsoft\IRsoft\obj\Debug\IRsoft.pdb
