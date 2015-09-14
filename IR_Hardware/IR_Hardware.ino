@@ -24,40 +24,37 @@ void setup() {
 	pinMode(8, OUTPUT);
 	pinMode(13, OUTPUT);
 	digitalWrite(ledPin, HIGH);
-	delay(500);
+	delay(100);
 	digitalWrite(ledPin, LOW);
 	// initialize serial: 
 	Serial.begin(9600);
-	// reserve 200 bytes for the inputString: 
-	inputString.reserve(200);
+	// reserve 256 bytes for the inputString: 
+	inputString.reserve(256);
 }
 void loop() {
 	cycle = (cycle + 1) % 1024;
 	if (cycle == 0)
 	{
+		digitalWrite(A0, LOW);
+		delay(10);
 		int sensorValue1 = analogRead(A0);
+		delay(10);
+		digitalWrite(A0, LOW);
+		delay(10);
 		int sensorValue2 = analogRead(A1);
+		delay(10);
+		digitalWrite(A0, LOW);
+		delay(10);
 		int sensorValue3 = analogRead(A2);
+		delay(10);
+		digitalWrite(A0, LOW);
+		delay(10);
 		int sensorValue4 = analogRead(A3);
+		delay(10);
 		t1 = (float)sensorValue1*kT;
 		t2 = (float)sensorValue2*kT;
 		t3 = (float)sensorValue3*kT;
 		t4 = (float)sensorValue4*kT;
-		// print out the value you read: 
-		for (int i = 0; i < 20; i++){
-			int t = analogRead(A0);
-			t1 = (t1 + (float)t*kT) / 2;
-			delay(1);
-			t = analogRead(A1);
-			t2 = (t2 + (float)t*kT) / 2;
-			delay(1);
-			t = analogRead(A2);
-			t3 = (t3 + (float)t*kT) / 2;
-			delay(1);
-			t = analogRead(A3);
-			t4 = (t4 + (float)t*kT) / 2;
-			delay(1);
-		}
 		if (isStart){
 			if (t1 < tUp){
 				digitalWrite(pwrUp, HIGH);
@@ -104,12 +101,6 @@ void loop() {
 			}
 			if (inputString == "GetTemp\n")
 			{
-				//TODO: 
-				//t1 = tUp; 
-				//t2 = tLow; 
-				//t3 = (tUp+tLow)/2; 
-				//t4 = tLow + 5; 
-				// 
 				String data;
 				char TempString[10];
 				dtostrf(t1, 4, 2, TempString);
