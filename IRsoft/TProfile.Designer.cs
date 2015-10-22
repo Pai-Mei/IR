@@ -36,6 +36,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.ListDevices = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
@@ -68,6 +69,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ListDevices,
+            this.toolStripButton3,
             this.toolStripSeparator1,
             this.toolStripButton4,
             this.toolStripButton5,
@@ -90,6 +92,16 @@
             this.ListDevices.Size = new System.Drawing.Size(121, 25);
             this.ListDevices.Text = "Select device";
             this.ListDevices.TextChanged += new System.EventHandler(this.ListDevices_TextChanged);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripSeparator1
             // 
@@ -169,12 +181,18 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             series1.Legend = "Legend1";
+            series1.MarkerBorderColor = System.Drawing.Color.Black;
+            series1.MarkerColor = System.Drawing.Color.White;
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series1.Name = "UpperTermProfile";
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series2.Legend = "Legend1";
+            series2.MarkerBorderColor = System.Drawing.Color.Black;
+            series2.MarkerColor = System.Drawing.Color.White;
+            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series2.Name = "LowerTermProfile";
             series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
@@ -183,6 +201,9 @@
             this.charts.Size = new System.Drawing.Size(465, 270);
             this.charts.TabIndex = 1;
             this.charts.Text = "chart1";
+            this.charts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.charts_MouseDown);
+            this.charts.MouseMove += new System.Windows.Forms.MouseEventHandler(this.charts_MouseMove);
+            this.charts.MouseUp += new System.Windows.Forms.MouseEventHandler(this.charts_MouseUp);
             // 
             // statusStrip1
             // 
@@ -191,7 +212,7 @@
             this.labelTime,
             this.toolStripStatusLabel3,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 301);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 302);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(465, 22);
             this.statusStrip1.TabIndex = 2;
@@ -307,14 +328,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 323);
+            this.ClientSize = new System.Drawing.Size(465, 324);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.charts);
             this.Controls.Add(this.toolStrip1);
             this.MinimumSize = new System.Drawing.Size(481, 362);
             this.Name = "TProfile";
-            this.Text = "TProfile";
+            this.Text = "TermProfile";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TProfile_FormClosing);
+            this.Load += new System.EventHandler(this.TProfile_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.charts)).EndInit();
@@ -353,5 +376,6 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.TextBox textBoxTempLow;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
     }
 }

@@ -8,9 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace IRsoft
 {
+
+
     public struct TempPoint
     {
         public int T {get; set;}
@@ -25,10 +28,13 @@ namespace IRsoft
 
     public partial class TProfile : Form
     {
-        private SerialPort sp;
+        private DataPoint m_selectedPoint;
+        private Int32 m_SelectedPointIndex;
+        private Series m_SelectedSeries;
         private TimeSpan esTime = new TimeSpan(0);
         int termopairs = 0;
         double[] terms;
+        SerialPort sp;
 
         public List<TempPoint> tempPoints = new List<TempPoint>();
 
@@ -70,6 +76,27 @@ namespace IRsoft
                 dp.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
                 dp.YValues = new double[] { low[i] };
                 dp.XValue = xData[i];
+                series.Points.Add(dp);
+            }
+        }
+
+        public TProfile(Profile Profile) : this()
+        {
+            RemoveLastPoint();
+            for (int i = 0; i < Profile.Count; i++)
+            {
+                System.Windows.Forms.DataVisualization.Charting.Series series = null;
+                series = (from s in charts.Series where s.Name == "UpperTermProfile" select s).FirstOrDefault();
+                System.Windows.Forms.DataVisualization.Charting.DataPoint dp = new System.Windows.Forms.DataVisualization.Charting.DataPoint();
+                dp.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+                dp.YValues = new double[] { Profile[i].Values[0] };
+                dp.XValue = Profile[i].X;
+                series.Points.Add(dp);
+                series = (from s in charts.Series where s.Name == "LowerTermProfile" select s).FirstOrDefault();
+                dp = new System.Windows.Forms.DataVisualization.Charting.DataPoint();
+                dp.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+                dp.YValues = new double[] { Profile[i].Values[0] };
+                dp.XValue = Profile[i].X;
                 series.Points.Add(dp);
             }
         }
@@ -224,18 +251,7 @@ namespace IRsoft
 
         private void ListDevices_TextChanged(object sender, EventArgs e)
         {
-            if (ListDevices.Text != "Select device")
-            {
-               if(InitSerialPort()){
-                   toolStripButton4.Enabled = true;
-                   toolStripButton4.Enabled = true;
-                   toolStripButton4.Enabled = true;
-               } else {
-                   toolStripButton4.Enabled = false;
-                   toolStripButton4.Enabled = false;
-                   toolStripButton4.Enabled = false;
-               }
-            }
+
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -322,6 +338,186 @@ namespace IRsoft
                 low[i] = s2.Points[i].YValues[0];
             }
 
+        }
+
+        private void TProfile_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void charts_MouseDown(object sender, MouseEventArgs e)
+        {
+            var results = charts.HitTest(e.X, e.Y);
+            if (results.ChartElementType == ChartElementType.DataPoint)
+            {
+                m_SelectedPointIndex = results.PointIndex;
+                m_SelectedSeries = results.Series;
+                m_selectedPoint = results.Series.Points[m_SelectedPointIndex];
+            }
+        }
+
+        private void charts_MouseUp(object sender, MouseEventArgs e)
+        {
+            m_selectedPoint = null;
+        }
+
+        private void charts_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (m_selectedPoint != null)
+            {
+                var total = 0.0;
+                //foreach (var s in charts.Series)
+                //{
+                //    if (s.Equals(m_SelectedSeries)) break;
+                //    total += s.Points[m_SelectedPointIndex].YValues[0];
+                //}
+                var prevValue = m_selectedPoint.YValues[0];
+                var yValue = charts.ChartAreas[0].AxisY.PixelPositionToValue(Math.Max(Math.Min(e.Y, charts.Size.Height - 1), 0));
+                yValue -= total;
+                yValue = Math.Min(yValue, charts.ChartAreas[0].AxisY.Maximum);
+                yValue = Math.Max(yValue, charts.ChartAreas[0].AxisY.Minimum);
+                m_selectedPoint.YValues[0] = yValue;
+                charts.Invalidate();
+            }
+            else
+            {
+                var hitTest = charts.HitTest(e.X, e.Y);
+                if (hitTest.ChartElementType == ChartElementType.DataPoint)
+                    charts.Cursor = Cursors.Hand;
+                else
+                    charts.Cursor = Cursors.Default;
+            }
+        }
+
+        private Color GetColorByValue(Double yValue)
+        {
+            yValue = Math.Max(yValue, charts.ChartAreas[0].AxisY.Minimum);
+            yValue = Math.Min(yValue, charts.ChartAreas[0].AxisY.Maximum);
+            return Color.FromArgb(
+                    /*r*/(Int32)(255 * (yValue - charts.ChartAreas[0].AxisY.Minimum) / (charts.ChartAreas[0].AxisY.Maximum - charts.ChartAreas[0].AxisY.Minimum)),
+                    /*g*/0,
+                    /*b*/(Int32)(255 - 255 * (yValue - charts.ChartAreas[0].AxisY.Minimum) / (charts.ChartAreas[0].AxisY.Maximum - charts.ChartAreas[0].AxisY.Minimum))
+                    );
+        }
+
+        private Int32 IntToRange(Int32 value, Int32 MaxValue)
+        {
+            value = value % MaxValue;
+            if (value < 0)
+                value = MaxValue + value;
+            return value;
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            if(InitSerialPort())
+            {
+                toolStripButton4.Enabled = true;
+                toolStripButton5.Enabled = true;
+                toolStripButton6.Enabled = true;
+            }
+        }
+
+        private void TProfile_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sp != null)
+            {
+                sp.Close();
+                sp.Dispose();
+            }
+        }
+    }
+
+    public class COM : IDisposable
+    {
+        private SerialPort m_SP;
+        private static List<String> m_Ports;
+
+        static COM()
+        {
+            m_Ports = new List<String>();
+            m_Ports.AddRange(SerialPort.GetPortNames());
+        }
+
+        public static List<string> Ports { get { return m_Ports; } }
+
+        public static COM Connect(string PortName)
+        {
+            if (m_Ports.Contains(PortName))
+                return new COM(PortName);
+            else
+                return null;
+        }
+
+        public void Dispose()
+        {
+            m_SP.Close();
+            m_SP.Dispose();
+        }
+
+        private COM(string PortName)
+        {
+            m_SP = new SerialPort(PortName, 9600, Parity.None);
+            m_SP.NewLine = "\n";
+            m_SP.Open();
+        }
+
+        public void Write(Double[] values)
+        {
+            try
+            {
+                if (values.Length != 24) throw new ArgumentOutOfRangeException();
+                m_SP.WriteLine("BeginProfile");
+                foreach (var value in values)
+                {
+                    var data = BitConverter.GetBytes(value);
+                    m_SP.Write(data, 0, data.Length);
+                }
+                m_SP.WriteLine("EndProfile");
+                var str = m_SP.ReadLine();
+            }
+            catch (Exception e)
+            {
+                String msg = e.Message;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    msg += "\n" + e.Message;
+                }
+                Error(msg);
+            }
+        }
+
+        public Double[] Read()
+        {
+            try
+            {
+                Double[] values = new Double[24];
+                m_SP.WriteLine("GiveProfile");
+                for (int i = 0; i < 24; i++)
+                {
+                    byte[] data = new byte[8];
+                    if (m_SP.Read(data, 0, 8) == 8)
+                        values[i] = BitConverter.ToDouble(data, 0);
+                }
+                return values;
+            }
+            catch (Exception e)
+            {
+                String msg = e.Message;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    msg += "\n" + e.Message;
+                }
+                Error(msg);
+                return null;
+            }
+        }
+
+        private void Error(string msg)
+        {
+            MessageBox.Show(msg, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

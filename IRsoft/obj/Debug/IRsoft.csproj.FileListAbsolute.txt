@@ -21,3 +21,14 @@ E:\Projects\IRsoft\IRsoft\obj\Debug\IRsoft.csproj.GenerateResource.Cache
 C:\Users\Stanislav\Documents\GitHub\IRsoft\IRsoft\bin\Debug\IRsoft.exe.config
 C:\Users\Stanislav\Documents\GitHub\IRsoft\IRsoft\obj\Debug\IRsoft.exe
 C:\Users\Stanislav\Documents\GitHub\IRsoft\IRsoft\obj\Debug\IRsoft.pdb
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\bin\Debug\IRsoft.exe.config
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.exe
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.pdb
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.csprojResolveAssemblyReference.cache
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.Form1.resources
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.Properties.Resources.resources
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.TProfile.resources
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.csproj.GenerateResource.Cache
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\bin\Debug\IRsoft.exe
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\bin\Debug\IRsoft.pdb
+C:\Users\Станислав\Documents\GitHub\IR\IRsoft\obj\Debug\IRsoft.ProfileEditor.resources

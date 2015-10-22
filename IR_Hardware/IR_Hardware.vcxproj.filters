@@ -21,5 +21,8 @@
     <ClInclude Include="Visual Micro\.IR_Hardware.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="__vm\.IR_Hardware.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

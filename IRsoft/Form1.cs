@@ -14,7 +14,9 @@ namespace IRsoft
     {
         private void NewProfile()
         {
-            TProfile tp = new TProfile();
+            ProfileEditor PE = new ProfileEditor();
+            PE.ShowDialog();
+            TProfile tp = new TProfile(PE.Profile);
             tp.MdiParent = this;
             tp.Show();
         }
