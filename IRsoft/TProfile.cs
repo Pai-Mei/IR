@@ -59,8 +59,9 @@ namespace IRsoft
             s2.Points.Add(dp);
         }
 
-        public TProfile(double[] xData, double[] up, double[] low):this()
+        public TProfile(String fileName, double[] xData, double[] up, double[] low):this()
         {
+            this.Text = fileName + " - " + this.Text;
             RemoveLastPoint();
             for (int i = 0; i < xData.Length; i++)
             {
@@ -80,8 +81,9 @@ namespace IRsoft
             }
         }
 
-        public TProfile(Profile Profile) : this()
+        public TProfile(String fileName, Profile Profile) : this()
         {
+            this.Text = fileName + " - " + this.Text;
             RemoveLastPoint();
             for (int i = 0; i < Profile.Count; i++)
             {

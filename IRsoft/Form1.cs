@@ -16,7 +16,7 @@ namespace IRsoft
         {
             ProfileEditor PE = new ProfileEditor();
             PE.ShowDialog();
-            TProfile tp = new TProfile(PE.Profile);
+            TProfile tp = new TProfile("NewProfile",PE.Profile);
             tp.MdiParent = this;
             tp.Show();
         }
@@ -87,7 +87,7 @@ namespace IRsoft
                     }
                     else { return; }
                 }
-                TProfile tp = new TProfile(x, up, low);
+                TProfile tp = new TProfile(ofd.FileName, x, up, low);
                 tp.MdiParent = this;
                 tp.Show();
             }
